@@ -3,25 +3,22 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
+	"github.com/AndreVeiga/go-api-rest/database"
 	"github.com/AndreVeiga/go-api-rest/models"
 	"github.com/gorilla/mux"
 )
 
 func GetAllPersonalities(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.GetAll())
+	var personalities []models.Personality
+	database.DB.Find(&personalities)
+
+	json.NewEncoder(w).Encode(personalities)
 }
 
 func GetById(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	id := vars["id"]
+	var personality models.Personality
+	database.DB.First(&personality, mux.Vars(r)["id"])
 
-	personalities := models.GetAll()
-
-	for _, personality := range personalities {
-		if strconv.Itoa(personality.Id) == id {
-
-		}
-	}
+	json.NewEncoder(w).Encode(personality)
 }
