@@ -1,12 +1,12 @@
 package main
 
 import (
-	"fmt"
-
+	"github.com/AndreVeiga/go-api-rest/database"
 	"github.com/AndreVeiga/go-api-rest/routes"
 )
 
 func main() {
-	fmt.Println("Starting server in Golang")
+	database.ConnectDatabase()
+
 	routes.HandleRequets()
 }
